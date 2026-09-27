@@ -1,1 +1,315 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Unit Converter</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+
+  <!-- HEADER -->
+  <header class="bg-white border-b border-slate-200">
+    <div class="max-w-5xl mx-auto px-6 py-4">
+      <h1 class="text-lg font-bold text-slate-900">
+        Unit Converter
+      </h1>
+    </div>
+  </header>
+
+
+  <!-- INTRO -->
+  <section class="max-w-5xl mx-auto px-6 pt-12 pb-8 text-center">
+
+    <h2 class="text-3xl sm:text-4xl font-bold text-slate-900">
+      Convert anything, instantly
+    </h2>
+
+    <p class="text-base text-slate-600 mt-3 max-w-xl mx-auto">
+      Three small tools for the units you actually run into:
+      weight, distance and temperature.
+    </p>
+
+  </section>
+
+
+  <!-- CONVERTERS -->
+  <main class="max-w-5xl mx-auto px-6 pb-16">
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+
+    
+       <!--CARD 1: WEIGHT  -->
+     
+
+      <div class="bg-white rounded-2xl shadow-md p-6">
+
+        <div class="flex items-center justify-between">
+
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">
+              Weight
+            </h3>
+
+            <p
+              id="weight-direction"
+              class="text-sm text-slate-500 mt-1"
+            >
+              Kilograms to pounds
+            </p>
+          </div>
+
+          <button
+            id="weight-swap"
+            type="button"
+            class="bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg cursor-pointer"
+          >
+            ⇄
+          </button>
+
+        </div>
+
+
+        <label
+          id="weight-input-label"
+          for="kg-input"
+          class="block text-sm font-medium text-slate-700 mt-5 mb-2"
+        >
+          Kilograms
+        </label>
+
+
+        <input
+          id="kg-input"
+          type="number"
+          value="0"
+          class="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900
+          focus:border-blue-500 focus:outline-none"
+        >
+
+
+        <button
+          id="kg-button"
+          class="w-full mt-4 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white
+          hover:bg-blue-700 transition cursor-pointer"
+        >
+          Convert
+        </button>
+
+
+        <div class="mt-5 rounded-lg bg-slate-50 p-4 text-center">
+
+          <p
+            id="weight-result-label"
+            class="text-xs uppercase tracking-wide text-slate-500"
+          >
+            Pounds
+          </p>
+
+          <p
+            id="kg-result"
+            class="text-2xl font-bold text-blue-600 mt-1"
+          >
+            0.00
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      
+      <!--  CARD 2: DISTANCE  -->
+      
+
+      <div class="bg-white rounded-2xl shadow-md p-6">
+
+        <div class="flex items-center justify-between">
+
+          <div>
+
+            <h3 class="text-lg font-bold text-slate-900">
+              Distance
+            </h3>
+
+            <p
+              id="distance-direction"
+              class="text-sm text-slate-500 mt-1"
+            >
+              Miles to kilometres
+            </p>
+
+          </div>
+
+
+          <button
+            id="distance-swap"
+            type="button"
+            class="bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg cursor-pointer"
+          >
+           ⇄
+          </button>
+
+        </div>
+
+
+        <label
+          id="distance-input-label"
+          for="miles-input"
+          class="block text-sm font-medium text-slate-700 mt-5 mb-2"
+        >
+          Miles
+        </label>
+
+
+        <input
+          id="miles-input"
+          type="number"
+          value="0"
+          class="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900
+          focus:border-emerald-500 focus:outline-none"
+        >
+
+
+        <button
+          id="miles-button"
+          class="w-full mt-4 rounded-lg bg-emerald-600 px-4 py-2 font-semibold text-white
+          hover:bg-emerald-700 transition cursor-pointer"
+        >
+          Convert
+        </button>
+
+
+        <div class="mt-5 rounded-lg bg-slate-50 p-4 text-center">
+
+          <p
+            id="distance-result-label"
+            class="text-xs uppercase tracking-wide text-slate-500"
+          >
+            Kilometres
+          </p>
+
+          <p
+            id="miles-result"
+            class="text-2xl font-bold text-emerald-600 mt-1"
+          >
+            0.00
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- CARD 3: TEMPERATURE -->
+     
+
+      <div class="bg-white rounded-2xl shadow-md p-6">
+
+        <div class="flex items-center justify-between">
+
+          <div>
+
+            <h3 class="text-lg font-bold text-slate-900">
+              Temperature
+            </h3>
+
+            <p
+              id="temperature-direction"
+              class="text-sm text-slate-500 mt-1"
+            >
+              Celsius to Fahrenheit
+            </p>
+
+          </div>
+
+
+          <button
+            id="temperature-swap"
+            type="button"
+            class="bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg cursor-pointer"
+          >
+            ⇄
+          </button>
+
+        </div>
+
+
+        <label
+          id="temperature-input-label"
+          for="celsius-input"
+          class="block text-sm font-medium text-slate-700 mt-5 mb-2"
+        >
+          Celsius
+        </label>
+
+
+        <input
+          id="celsius-input"
+          type="number"
+          value="0"
+          class="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900
+          focus:border-violet-500 focus:outline-none"
+        >
+
+
+        <button
+          id="celsius-button"
+          class="w-full mt-4 rounded-lg bg-violet-600 px-4 py-2 font-semibold text-white
+          hover:bg-violet-700 transition cursor-pointer"
+        >
+          Convert
+        </button>
+
+
+        <div class="mt-5 rounded-lg bg-slate-50 p-4 text-center">
+
+          <p
+            id="temperature-result-label"
+            class="text-xs uppercase tracking-wide text-slate-500"
+          >
+            Fahrenheit
+          </p>
+
+          <p
+            id="celsius-result"
+            class="text-2xl font-bold text-violet-600 mt-1"
+          >
+            32.00 °F
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200">
+
+    <div class="max-w-5xl mx-auto px-6 py-6 text-center">
+
+      <p class="text-sm text-slate-500">
+        Unit Converter
+      </p>
+
+    </div>
+
+  </footer>
+
+
+  <!-- TYPESCRIPT COMPILED JAVASCRIPT -->
+  <script src="./main.js"></script>
+
+</body>
+</html>
