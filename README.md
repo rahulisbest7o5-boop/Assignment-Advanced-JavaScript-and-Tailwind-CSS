@@ -2,7 +2,7 @@
 
 ## Group Information
 
-- Name(s): Henry Nguyen, Aman Kumar,Rahul Thakur
+- Name(s): Henry Nguyen, Aman Kumar, Rahul Thakur
 - Date: September 28, 2026
 
 ## Program Description
