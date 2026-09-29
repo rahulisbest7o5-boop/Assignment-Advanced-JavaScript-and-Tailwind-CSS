@@ -69,6 +69,9 @@ const formatResult = (result) => Array.isArray(result)
     const conversionResult = document.getElementById("conversion-result");
     const convertButton = document.getElementById("convert-button");
     const conversionSwap = document.getElementById("conversion-swap");
+    const arrayInput = document.getElementById("array-input");
+    const arrayButton = document.getElementById("array-button");
+    const arrayResult = document.getElementById("array-result");
     const converterLinks = document.querySelectorAll("[data-converter]");
     let activeConverter = "weight";
     let isReversed = false;
@@ -93,6 +96,7 @@ const formatResult = (result) => Array.isArray(result)
         conversionResultLabel.textContent = to;
         convertButton.textContent = `Convert ${activeConverter}`;
         conversionResult.textContent = "0.00";
+        arrayResult.textContent = "Converted values will appear here.";
         converterLinks.forEach((link) => {
             const isActive = link.dataset.converter === activeConverter;
             link.classList.toggle("bg-blue-50", isActive);
@@ -113,7 +117,28 @@ const formatResult = (result) => Array.isArray(result)
         const convert = createConverter(from, to);
         conversionResult.textContent = formatResult(convert(value));
     }
+    function convertArray() {
+        let values;
+        try {
+            values = JSON.parse(arrayInput.value);
+        }
+        catch {
+            arrayResult.textContent = "Enter a valid JSON array, such as [1, 2, 3].";
+            return;
+        }
+        if (!Array.isArray(values) ||
+            !values.every((value) => typeof value === "number" && Number.isFinite(value))) {
+            arrayResult.textContent = "Enter an array containing only numbers.";
+            return;
+        }
+        const converter = converters[activeConverter];
+        const from = isReversed ? converter.toUnit : converter.fromUnit;
+        const to = isReversed ? converter.fromUnit : converter.toUnit;
+        const convert = createConverter(from, to);
+        arrayResult.textContent = `[${formatResult(convert(values))}]`;
+    }
     convertButton.addEventListener("click", convertValue);
+    arrayButton.addEventListener("click", convertArray);
     conversionSwap.addEventListener("click", () => {
         isReversed = !isReversed;
         updateConverter();
