@@ -14,7 +14,7 @@ interface ConverterDefinition {
   const converters: Record<ConverterName, ConverterDefinition> = {
     weight: {
       title: "Weight Converter",
-      description: "Quickly convert betweenkilograms and pounds.",
+      description: "Quickly convert between kilograms and pounds.",
       from: "Kilograms",
       to: "Pounds",
       fromUnit: "kg",
