@@ -10,6 +10,7 @@ interface ConverterDefinition {
 
 }
 
+// Conversion formulas for each supported direction.
 const formulas: Record<string, (value: number) => number> = {
   "kg-lb": (kg: number): number => kg * 2.20462,
   "lb-kg": (lb: number): number => lb / 2.20462,
@@ -30,6 +31,7 @@ const createConverter = (from: string, to: string) => {
     Array.isArray(value) ? value.map(formula) : formula(value);
 };
 
+// Accept either a single number or several numbers separated by commas.
 const parseInput = (text: string): number | number[] | null => {
   const parts: string[] = text
     .split(",")
@@ -55,6 +57,7 @@ const formatResult = (result: number | number[]): string =>
     : result.toFixed(2);
 
 ((): void => {
+  // Each converter type stores its labels and the units used for conversion.
   const converters: Record<ConverterName, ConverterDefinition> = {
     weight: {
       title: "Weight Converter",
@@ -126,10 +129,12 @@ const formatResult = (result: number | number[]): string =>
   let activeConverter: ConverterName = "weight";
   let isReversed = false;
 
+  // Guard against invalid converter names coming from the UI.
   function isConverterName(value: string | undefined): value is ConverterName {
     return value === "weight" || value === "distance" || value === "temperature";
   }
 
+  // Refresh the visible labels and values whenever the selected converter changes.
   function updateConverter(): void {
     const converter = converters[activeConverter];
     const from = isReversed ? converter.to : converter.from;
@@ -158,7 +163,8 @@ const formatResult = (result: number | number[]): string =>
     });
   }
 
-    function convertValue(): void {
+    // Convert the entered value using the active unit pair and show the formatted result.
+  function convertValue(): void {
     const value = parseInput(conversionInput.value);
 
     if (value === null) {
