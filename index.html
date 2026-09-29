@@ -103,9 +103,10 @@
           >
             <input
               id="conversion-input"
-              type="number"
-              step="any"
+              type="text"
+              inputmode="decimal"
               value="0"
+              placeholder="e.g. 5  or  1, 5, 10"
               class="w-full min-w-0 bg-transparent px-4 py-3 text-lg text-slate-900 outline-none"
             />
             <span
@@ -115,6 +116,10 @@
               kg
             </span>
           </div>
+
+          <p class="mt-2 text-xs text-slate-500"> 
+            Enter one value, or several separated by commas.
+          </p>
 
           <button
             id="convert-button"

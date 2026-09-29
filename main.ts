@@ -7,8 +7,52 @@ interface ConverterDefinition {
   to: string;
   fromUnit: string;
   toUnit: string;
-  convert: (value: number, reversed: boolean) => number;
+
 }
+
+const formulas: Record<string, (value: number) => number> = {
+  "kg-lb": (kg: number): number => kg * 2.20462,
+  "lb-kg": (lb: number): number => lb / 2.20462,
+  "km-mi": (km: number): number => km * 0.621371,
+  "mi-km": (mi: number): number => mi / 0.621371,
+  "°C-°F": (c: number): number => (c * 9) / 5 + 32,
+  "°F-°C": (f: number): number => ((f - 32) * 5) / 9,
+};
+
+const createConverter = (from: string, to: string) => {
+  const formula = formulas[`${from}-${to}`];
+
+  if (formula === undefined) {
+    throw new Error(`No conversion from ${from} to ${to}`);
+  }
+
+  return (value: number | number[]): number | number[] =>
+    Array.isArray(value) ? value.map(formula) : formula(value);
+};
+
+const parseInput = (text: string): number | number[] | null => {
+  const parts: string[] = text
+    .split(",")
+    .map((part: string): string => part.trim())
+    .filter((part: string): boolean => part !== "");
+
+  if (parts.length === 0) {
+    return null;
+  }
+
+  const numbers: number[] = parts.map(Number);
+
+  if (numbers.some((n: number): boolean => Number.isNaN(n))) {
+    return null;
+  }
+
+  return numbers.length === 1 ? numbers[0] : numbers;
+};
+
+const formatResult = (result: number | number[]): string =>
+  Array.isArray(result)
+    ? result.map((n: number): string => n.toFixed(2)).join(", ")
+    : result.toFixed(2);
 
 ((): void => {
   const converters: Record<ConverterName, ConverterDefinition> = {
@@ -19,9 +63,9 @@ interface ConverterDefinition {
       to: "Pounds",
       fromUnit: "kg",
       toUnit: "lb",
-      convert: (value, reversed) =>
-        reversed ? value / 2.20462 : value * 2.20462,
     },
+
+
     distance: {
       title: "Distance Converter",
       description: "Quickly convert between kilometers and miles.",
@@ -29,8 +73,7 @@ interface ConverterDefinition {
       to: "Miles",
       fromUnit: "km",
       toUnit: "mi",
-      convert: (value, reversed) =>
-        reversed ? value / 0.621371 : value * 0.621371,
+
     },
     temperature: {
       title: "Temperature Converter",
@@ -39,8 +82,7 @@ interface ConverterDefinition {
       to: "Fahrenheit",
       fromUnit: "°C",
       toUnit: "°F",
-      convert: (value, reversed) =>
-        reversed ? ((value - 32) * 5) / 9 : (value * 9) / 5 + 32,
+
     },
   };
 
@@ -117,16 +159,20 @@ interface ConverterDefinition {
     });
   }
 
-  function convertValue(): void {
-    if (conversionInput.value.trim() === "") {
-      conversionResult.textContent = "Enter a number";
+    function convertValue(): void {
+    const value = parseInput(conversionInput.value);
+
+    if (value === null) {
+      conversionResult.textContent = "Enter a number, or numbers separated by commas";
       return;
     }
 
-    const value = Number(conversionInput.value);
-    conversionResult.textContent = converters[activeConverter]
-      .convert(value, isReversed)
-      .toFixed(2);
+    const converter = converters[activeConverter];
+    const from = isReversed ? converter.toUnit : converter.fromUnit;
+    const to = isReversed ? converter.fromUnit : converter.toUnit;
+    const convert = createConverter(from, to);
+
+    conversionResult.textContent = formatResult(convert(value));
   }
 
   convertButton.addEventListener("click", convertValue);
